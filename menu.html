@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenEvidence 教學資源</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    background: #FFF5EE;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 2.5em;
+  }
+  .header h1 {
+    font-size: 2.2em;
+    font-weight: 900;
+    color: #ED5829;
+    margin-bottom: 0.3em;
+  }
+  .header p {
+    font-size: 1em;
+    color: #666;
+    font-weight: 500;
+  }
+  .cards {
+    display: flex;
+    gap: 1.5em;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 720px;
+    width: 100%;
+  }
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 2em 2.2em;
+    flex: 1;
+    min-width: 260px;
+    max-width: 320px;
+    text-decoration: none;
+    border: 2px solid #F0F0F0;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(237,88,41,0.12);
+    border-color: #ED5829;
+  }
+  .card .icon { font-size: 2.4em; }
+  .card .title {
+    font-size: 1.15em;
+    font-weight: 700;
+    color: #1A1A1A;
+  }
+  .card .desc {
+    font-size: 0.85em;
+    color: #777;
+    font-weight: 500;
+    line-height: 1.6;
+  }
+  .card .tag {
+    display: inline-block;
+    margin-top: 0.4em;
+    padding: 0.2em 0.8em;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 700;
+  }
+  .tag-slides { background: #FFF1EB; color: #ED5829; }
+  .tag-pdf    { background: #E8F5F0; color: #1A8870; }
+  .footer {
+    margin-top: 3em;
+    font-size: 0.78em;
+    color: #AAA;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>OpenEvidence</h1>
+  <p>李承洲 藥師 · 教學資源</p>
+</div>
+
+<div class="cards">
+  <a class="card" href="index.html">
+    <div class="icon">🎞️</div>
+    <div class="title">Demo 投影片</div>
+    <div class="desc">OpenEvidence 核心功能、RAG 機制、Prompt 技巧、臨床組合技示範</div>
+    <span class="tag tag-slides">互動投影片</span>
+  </a>
+  <a class="card" href="dotflow-tutorial.pdf" target="_blank">
+    <div class="icon">📄</div>
+    <div class="title">DotFlow 教學</div>
+    <div class="desc">DotFlow 建立與使用教學，藥師專用工作流模板</div>
+    <span class="tag tag-pdf">PDF</span>
+  </a>
+</div>
+
+<div class="footer">PGY 藥師教學 · 2026.05.14</div>
+
+</body>
+</html>
