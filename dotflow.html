@@ -6,30 +6,36 @@
 <title>DotFlow 教學 — OpenEvidence</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { height: 100%; background: #1a1a1a; }
+  html, body { height: 100%; background: #404040; }
   .topbar {
-    height: 44px;
-    background: #ED5829;
-    display: flex;
-    align-items: center;
-    padding: 0 1.2em;
-    gap: 1em;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+    height: 44px; background: #ED5829;
+    display: flex; align-items: center; padding: 0 1.2em; gap: 1em;
   }
   .topbar a {
-    color: white;
-    text-decoration: none;
+    color: white; text-decoration: none;
     font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
-    font-size: 0.85em;
-    font-weight: 600;
-    opacity: 0.9;
+    font-size: 0.85em; font-weight: 600; opacity: 0.9;
   }
   .topbar a:hover { opacity: 1; }
   .topbar .sep { color: rgba(255,255,255,0.4); }
   .topbar .title { color: white; font-weight: 700; font-size: 0.9em; }
-  embed {
+  .topbar .pages { margin-left: auto; color: rgba(255,255,255,0.85); font-size: 0.82em; font-weight: 600; font-family: monospace; }
+  #viewer {
+    margin-top: 44px;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 1.2em 0 2em;
+    gap: 0.8em;
+  }
+  #viewer canvas {
     display: block;
-    width: 100%;
-    height: calc(100vh - 44px);
+    max-width: 100%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    background: white;
+  }
+  #loading {
+    color: #ccc; font-family: "PingFang TC", sans-serif;
+    font-size: 0.95em; margin-top: 30vh; text-align: center;
   }
 </style>
 </head>
@@ -38,7 +44,38 @@
   <a href="menu.html">← 返回</a>
   <span class="sep">/</span>
   <span class="title">DotFlow 教學</span>
+  <span class="pages" id="pageInfo"></span>
 </div>
-<embed src="dotflow-tutorial.pdf" type="application/pdf">
+<div id="viewer"><div id="loading">載入中⋯</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const viewer = document.getElementById('viewer');
+  const pageInfo = document.getElementById('pageInfo');
+
+  pdfjsLib.getDocument('dotflow-tutorial.pdf').promise.then(pdf => {
+    document.getElementById('loading').remove();
+    pageInfo.textContent = pdf.numPages + ' 頁';
+    const scale = Math.min(window.innerWidth / 620, 1.6);
+    const renders = [];
+    for (let i = 1; i <= pdf.numPages; i++) {
+      renders.push(pdf.getPage(i).then(page => {
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        canvas.dataset.page = i;
+        viewer.appendChild(canvas);
+        return page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+      }));
+    }
+    return Promise.all(renders);
+  }).catch(err => {
+    document.getElementById('loading').textContent = '載入失敗：' + err.message;
+  });
+</script>
 </body>
 </html>
